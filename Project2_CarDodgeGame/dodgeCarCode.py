@@ -34,7 +34,7 @@ CARS = []
 #--Movements--
 playerVelocity = 5
 playerAcc = 0.5
-carVelocity = 2
+carVelocity = 4
 carAcc = 1
 
 # --Car Class--
@@ -149,7 +149,7 @@ def showGameArea():
         # Checking Collision
         if checkCollision():
             channel4.play(SOUNDS['GameOver'], loops = 0)
-            sleep(3)
+            sleep(2)
             reset()
             return
 
@@ -166,16 +166,16 @@ def modifyCars():
     global carCount, score
     laneCheck = [0] * 10
     temp = carCount
-    for i in range(0,temp):
+    while temp != 0:
         newCar = Car()
         newCar.carLane = random.randint(0, 9)
         if laneCheck[newCar.carLane] == 1:
-            temp += 1
             continue
         laneCheck[newCar.carLane] = 1
         newCar.carType = random.randint(1, 3)
         newCar.y = random.randint(-2*carSize[1],-carSize[1])
         CARS.append(newCar)
+        temp -= 1
 
     for car in CARS:
         if car.y > gameAreaSize[1] + carSize[1] + 10:
@@ -193,7 +193,7 @@ def increaseLevel():
         playerVelocity += playerAcc
     
     if level % 10 == 0:
-        offset += 30
+        offset += 50
     
 def reset():
     global playerPos, CARS, level, score, carCount, playerVelocity, playerAcc, carVelocity, carAcc, CPinc
